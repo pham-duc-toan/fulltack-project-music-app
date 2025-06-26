@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/toan/project-music-app/mysql:/docker-entrypoint-initdb.d
+    restart: always
+
+  backend:
+    build: ./backend
+    container_name: backend_service
+    ports:
+      - "2207:2207"
+    depends_on:
+      - mysql
+    env_file:
+      - ./backend/.env
+    restart: always
+    # Nếu muốn chạy migration tự động trước khi start:
+    # command: sh -c "npm run migration:run && npm run start:prod"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    restart: always
+
+volumes:
+  mysql-data:
