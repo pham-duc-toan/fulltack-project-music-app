@@ -41,6 +41,8 @@ export default function LoginPage() {
   const [errorPassword, setErrorPassword] = useState<string>("");
 
   useEffect(() => {
+    console.log(`${process.env.NEXT_PUBLIC_AUTH_API}/login`);
+
     const clearToken = async () => {
       removeTokensFromLocalStorage();
       await logout();
