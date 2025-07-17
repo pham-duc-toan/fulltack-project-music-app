@@ -4,35 +4,41 @@ import {
   Body,
   Get,
   Param,
-  Put,
   Delete,
   Patch,
   UseGuards,
   Request,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+} from '@nestjs/swagger';
+
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { SongToPlayList } from './dto/add-song-to-playlist.dto';
 import { JwtAuthGuard } from 'src/auth/passport/jwt-auth.guard';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 import { PlayList } from './entities/playlist.entity';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBearerAuth,
-  ApiParam,
-  ApiBody,
-} from '@nestjs/swagger';
+import { UseJWTAuth } from 'src/common/decorators/authenticated';
 
 @ApiTags('Playlists')
 @Controller('playlists')
 export class PlaylistController {
   constructor(private readonly playlistService: PlaylistService) {}
-
+  @UseJWTAuth()
   @Post()
   @ApiOperation({ summary: 'Tạo playlist mới' })
-  @ApiResponse({ status: 201, description: 'Tạo playlist thành công' })
+  @ApiBody({ type: CreatePlaylistDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Tạo playlist thành công',
+    type: PlayList,
+  })
   async create(
     @Body() createPlaylistDto: CreatePlaylistDto,
   ): Promise<PlayList> {
@@ -44,7 +50,11 @@ export class PlaylistController {
 
   @Get()
   @ApiOperation({ summary: 'Lấy danh sách tất cả playlist' })
-  @ApiResponse({ status: 200, description: 'Danh sách playlist' })
+  @ApiResponse({
+    status: 200,
+    description: 'Danh sách playlist',
+    type: [PlayList],
+  })
   async findAll(): Promise<PlayList[]> {
     return this.playlistService.findAll();
   }
@@ -52,23 +62,29 @@ export class PlaylistController {
   @Get(':id')
   @ApiOperation({ summary: 'Lấy chi tiết playlist theo ID' })
   @ApiParam({ name: 'id', description: 'ID của playlist' })
-  @ApiResponse({ status: 200, description: 'Thông tin playlist' })
+  @ApiResponse({
+    status: 200,
+    description: 'Thông tin playlist',
+    type: PlayList,
+  })
   async findOne(@Param('id') id: string): Promise<PlayList> {
     return this.playlistService.findOne(id);
   }
 
   @Get('user/my-playlists')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @UseJWTAuth()
   @ApiOperation({ summary: 'Lấy danh sách playlist của user hiện tại' })
-  @ApiResponse({ status: 200, description: 'Danh sách playlist của user' })
+  @ApiResponse({
+    status: 200,
+    description: 'Danh sách playlist của user',
+    type: [PlayList],
+  })
   async detail(@Request() req) {
     return this.playlistService.detail(req.user.id);
   }
 
   @Post(':id/songs')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @UseJWTAuth()
   @ApiOperation({ summary: 'Thêm bài hát vào playlist' })
   @ApiParam({ name: 'id', description: 'ID của playlist' })
   @ApiBody({ type: SongToPlayList })
@@ -82,8 +98,7 @@ export class PlaylistController {
   }
 
   @Delete(':id/songs')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @UseJWTAuth()
   @ApiOperation({ summary: 'Xóa bài hát khỏi playlist' })
   @ApiParam({ name: 'id', description: 'ID của playlist' })
   @ApiBody({ type: SongToPlayList })
@@ -97,11 +112,18 @@ export class PlaylistController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @UseJWTAuth()
   @ApiOperation({ summary: 'Xóa playlist của user hiện tại' })
   @ApiParam({ name: 'id', description: 'ID của playlist' })
-  @ApiResponse({ status: 200, description: 'Kết quả xóa playlist' })
+  @ApiResponse({
+    status: 200,
+    description: 'Kết quả xóa playlist',
+    schema: {
+      example: {
+        message: 'Playlist với id abc123 đã được xóa thành công',
+      },
+    },
+  })
   async remove(
     @Param('id') id: string,
     @Request() req,
@@ -122,11 +144,19 @@ export class PlaylistController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @UseJWTAuth()
   @ApiOperation({ summary: 'Cập nhật playlist của user hiện tại' })
   @ApiParam({ name: 'id', description: 'ID của playlist' })
-  @ApiResponse({ status: 200, description: 'Kết quả cập nhật playlist' })
+  @ApiBody({ type: UpdatePlaylistDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Kết quả cập nhật playlist',
+    schema: {
+      example: {
+        message: 'Playlist với id abc123 đã được update thành công',
+      },
+    },
+  })
   async edit(
     @Param('id') id: string,
     @Body() body: UpdatePlaylistDto,

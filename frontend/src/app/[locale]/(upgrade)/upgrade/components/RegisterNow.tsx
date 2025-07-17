@@ -44,15 +44,10 @@ const RegisterNow = () => {
       const res = await apiBasicClient("POST", "/payment");
       if (res?.statusCode == 201) {
         try {
-          const response = await apiBasicClient(
-            "POST",
-            "/orders/create",
-            undefined,
-            {
-              orderId: res.data.orderId,
-              shortLink: res.data.payUrl,
-            }
-          );
+          const response = await apiBasicClient("POST", "/orders", undefined, {
+            orderId: res.data.orderId,
+            shortLink: res.data.payUrl,
+          });
           if (response?.data?.orderId) {
             await apiBasicClient(
               "POST",

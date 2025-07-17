@@ -72,7 +72,7 @@ function SingerCreateComponent() {
 
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACK_END_URL + "/singers/create",
+        process.env.NEXT_PUBLIC_BACK_END_URL + "/singers",
         formData,
         {
           headers: {

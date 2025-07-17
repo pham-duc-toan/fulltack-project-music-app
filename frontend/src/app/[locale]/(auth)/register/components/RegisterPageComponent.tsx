@@ -59,18 +59,13 @@ const RegisterPageComponent = () => {
     try {
       setIsSubmitting(true);
 
-      const res = await apiBasicClientPublic(
-        "POST",
-        "/users/create",
-        undefined,
-        {
-          username: data.username,
-          password: data.password,
-          fullName: data.fullName,
-          userId: data.userId,
-          type: "SYSTEM",
-        }
-      );
+      const res = await apiBasicClientPublic("POST", "/users", undefined, {
+        username: data.username,
+        password: data.password,
+        fullName: data.fullName,
+        userId: data.userId,
+        type: "SYSTEM",
+      });
 
       if (res?.statusCode >= 300) {
         if (Array.isArray(res.message)) {

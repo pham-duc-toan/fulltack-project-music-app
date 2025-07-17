@@ -1,7 +1,7 @@
 import { locales } from "@/i18n/routing";
 import type { MetadataRoute } from "next";
 
-// const url = "http://localhost:3000";
+// const url = "http://13.215.228.26";
 
 export default function robots(): MetadataRoute.Robots {
   const disallowPathsAdmin = locales.map((locale) => `/${locale}/admin`);

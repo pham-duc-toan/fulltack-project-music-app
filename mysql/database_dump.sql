@@ -367,8 +367,11 @@ CREATE TABLE `song_for_you_list_song_song` (
 
 LOCK TABLES `song_for_you_list_song_song` WRITE;
 /*!40000 ALTER TABLE `song_for_you_list_song_song` DISABLE KEYS */;
-INSERT INTO `song_for_you_list_song_song` VALUES ('c2125818-523d-4a80-8dc0-42564222d288','1c6c433a-586d-48b3-94ec-370d3c49661a'),('c2125818-523d-4a80-8dc0-42564222d288','4ad3835d-48ac-494a-80c9-47913b31bc5d'),('c2125818-523d-4a80-8dc0-42564222d288','4daa99c7-731c-4d4d-90fa-5f9a6ddf4aa8');
+INSERT INTO `song_for_you_list_song_song` VALUES ('c2125818-523d-4a80-8dc0-42564222d288','1c6c433a-586d-48b3-94ec-370d3c49661a'),('c2125818-523d-4a80-8dc0-42564222d288','4ad3835d-48ac-494a-80c9-47913b31bc5d'),('c2125818-523d-4a80-8dc0-42564222d288','4daa99c7-731c-4d4d-90fa-5f9a6ddf4aa8'),('c2125818-523d-4a80-8dc0-42564222d288','d5db5b16-3e78-4eaf-b404-0d875fa689dd'),('c2125818-523d-4a80-8dc0-42564222d288','d4ad8b1b-a82f-41c3-bc8f-85fe74a6a2c3'),('c2125818-523d-4a80-8dc0-42564222d288','c7aa0703-ce61-4d5b-a5ad-2a66453afe9f');
 /*!40000 ALTER TABLE `song_for_you_list_song_song` ENABLE KEYS */;
+-- d5db5b16-3e78-4eaf-b404-0d875fa689dd
+-- d4ad8b1b-a82f-41c3-bc8f-85fe74a6a2c3
+-- c7aa0703-ce61-4d5b-a5ad-2a66453afe9f
 UNLOCK TABLES;
 
 --

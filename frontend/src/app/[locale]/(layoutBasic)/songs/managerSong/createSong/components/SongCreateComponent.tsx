@@ -85,7 +85,7 @@ function SongCreateComponent() {
     setLoading(true);
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACK_END_URL + "/songs/create",
+        process.env.NEXT_PUBLIC_BACK_END_URL + "/songs",
         formData,
         {
           headers: {
