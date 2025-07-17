@@ -24,7 +24,7 @@ services:
     depends_on:
       - mysql
     env_file:
-      - ./backend/.env
+      - ./env/.env.backend
     restart: always
     # Nếu muốn chạy migration tự động trước khi start:
     # command: sh -c "npm run migration:run && npm run start:prod"
@@ -37,7 +37,7 @@ services:
     depends_on:
       - backend
     env_file:
-      - ./frontend/.env
+      - ./env/.env.frontend
     restart: always
 
 volumes:

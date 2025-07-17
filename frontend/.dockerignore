@@ -1,4 +1,21 @@
-node_modules.next;
-Dockerfile.dockerignore.git.gitignore.env.local;
-npm - debug.log;
-README.md;
+# Node modules & Next.js build output
+node_modules
+.next
+
+# Docker & Git files
+Dockerfile
+.dockerignore
+.git
+.gitignore
+
+# Environment files
+.env
+.env.local
+.env.*
+
+# Logs
+npm-debug.log
+
+# Documentation
+README.md
+*.md
